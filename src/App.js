@@ -1,7 +1,7 @@
 import "./App.css";
 import { get } from "./utils/api";
 import { useEffect, useState } from "react";
-import ExpenseChart from "./components/ExpenseChart";
+import HomePage from "./components/Homepage";
 
 function App() {
   const [data, setData] = useState(null);
@@ -18,9 +18,8 @@ function App() {
   return (
     <div className="App">
       <header className="App-header">
-        {/* Learn React with api - key9uIaZ1141Jn0fO */}
+        <HomePage data={data} />
         <p>Show from Date to Date</p>
-        {data && <ExpenseChart data={data} />}
       </header>
     </div>
   );
