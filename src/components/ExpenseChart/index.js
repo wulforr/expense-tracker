@@ -1,11 +1,11 @@
 import React, { useState } from "react";
 import HighchartsReact from "highcharts-react-official";
 import Highcharts from "highcharts";
+import style from "./style.module.css";
 
 export default function ExpenseChart({ data }) {
   const mappedData = data.map((ele) => ({ name: ele.Category, y: ele.Amount }));
-  const [hoverData, setHoverData] = useState(null);
-  const [chartOptions, setChartOptions] = useState({
+  const chartOptions = {
     chart: {
       plotBackgroundColor: null,
       plotBorderWidth: null,
@@ -37,18 +37,13 @@ export default function ExpenseChart({ data }) {
         data: mappedData,
       },
     ],
-  });
-
-  const updateSeries = () => {
-    setChartOptions({
-      series: [{ data: [Math.random() * 5, 2, 1] }],
-    });
   };
+  const [hoverData, setHoverData] = useState(null);
+
   return (
-    <div>
+    <div className={style.container}>
       <HighchartsReact highcharts={Highcharts} options={chartOptions} />
       <h3>Hovering over {hoverData}</h3>
-      <button onClick={updateSeries}>Update Series</button>
     </div>
   );
 }

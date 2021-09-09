@@ -2,8 +2,10 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  flex-wrap: wrap;
+  flex-direction: column;
 }
 
-.container > div {
+/* .datePickerWrapper > div {
   max-width: 400px;
-}
+} */
