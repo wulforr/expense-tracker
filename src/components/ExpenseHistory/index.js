@@ -5,7 +5,7 @@ export default function ExpenseHistory({ data }) {
   return (
     <div className={style.container}>
       {data.map((expense) => (
-        <div className={style.lineItem}>
+        <div className={style.lineItem} key={expense.ID}>
           <div className={style.lineItemInfo}>
             <div>{expense.Category}</div>
             <div>{expense.Description}</div>

@@ -1,17 +1,38 @@
-import React from "react";
-import { Modal, Button } from "react-rainbow-components";
+import React, { useState } from "react";
+import {
+  Modal,
+  Button,
+  Input,
+  DateTimePicker,
+  Picklist,
+  Option,
+} from "react-rainbow-components";
 import style from "./style.module.css";
+import { getCategory } from "../../utils/utils";
 
-const textStyles = {
-  textAlign: "center",
-  fontSize: 15,
-  padding: "0 16px",
-};
+export default function ModalWFooter({ isModalOpen, setIsModalOpen, data }) {
+  const [amount, setAmount] = useState(0);
+  const [description, setDescription] = useState("");
+  const [category, setCategory] = useState({
+    value: "Food",
+    name: undefined,
+    label: "Food",
+    icon: null,
+  });
+  const [options, setOptions] = useState(getCategory(data));
+  const [customCategory, setCustomCategory] = useState("");
+  const [dateTime, setDateTime] = useState(new Date());
 
-export default function ModalWFooter({ isModalOpen, setIsModalOpen }) {
   const handleOnClose = () => {
     setIsModalOpen(false);
   };
+
+  function handlePicklistChange(value) {
+    setCategory(value);
+  }
+
+  console.log("options", options);
+  console.log("category", category);
 
   return (
     <div className="rainbow-m-bottom_xx-large rainbow-p-bottom_xx-large">
@@ -32,27 +53,56 @@ export default function ModalWFooter({ isModalOpen, setIsModalOpen }) {
           </div>
         }
       >
-        <p style={textStyles}>
-          A rainbow is a meteorological phenomenon that is caused by reflection,
-          refraction and dispersion of light in water droplets resulting in a
-          spectrum of light appearing in the sky. It takes the form of a
-          multicoloured circular arc. Rainbows caused by sunlight always appear
-          in the section of sky directly opposite the sun. Rainbows can be full
-          circles. However, the observer normally sees only an arc formed by
-          illuminated.
-        </p>
-        <p style={textStyles}>
-          It takes the form of a multicoloured circular arc. Rainbows caused by
-          sunlight always appear in the section of sky directly opposite the
-          sun. Rainbows can be full circles. However, the observer normally sees
-          only an arc formed by illuminated droplets.
-        </p>
-        <p style={textStyles}>
-          Rainbows caused by sunlight always appear in the section of sky
-          directly opposite the sun. Rainbows can be full circles. However, the
-          observer normally sees only an arc formed by illuminated droplets
-          above the ground.
-        </p>
+        <Input
+          className="rainbow-p-around_medium"
+          label="Amount"
+          labelAlignment="left"
+          placeholder="Amount"
+          type="number"
+          min={0}
+          value={amount}
+          onChange={(e) => setAmount(e.target.value)}
+        />
+        <Input
+          className="rainbow-p-around_medium"
+          label="Description"
+          labelAlignment="left"
+          placeholder="Description"
+          type="text"
+          value={description}
+          onChange={(e) => setDescription(e.target.value)}
+        />
+        <div className="rainbow-flex rainbow-align_right">
+          <Picklist
+            onChange={handlePicklistChange}
+            value={category}
+            placeholder="Select Category"
+            labelAlignment="left"
+            label="Category"
+          >
+            <Option value="Custom" label="Custom" />
+            {options.map((ele, index) => (
+              <Option key={index} value={ele} label={ele} />
+            ))}
+          </Picklist>
+          {category.value === "Custom" && (
+            <Input
+              type="text"
+              value={customCategory}
+              onChange={(e) => setCustomCategory(e.target.value)}
+              label="Custom Category"
+              labelAlignment="left"
+            />
+          )}
+        </div>
+        <DateTimePicker
+          formatStyle="small"
+          value={dateTime}
+          label="DateTimePicker Label"
+          onChange={(value) => setDateTime(value)}
+          className="rainbow-m-around_small"
+          labelAlignment="left"
+        />
       </Modal>
     </div>
   );

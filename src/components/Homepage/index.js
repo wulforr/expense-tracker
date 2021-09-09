@@ -7,7 +7,7 @@ import style from "./style.module.css";
 
 export default function Homepage({ data }) {
   const startOfMonth = new Date().setDate(1);
-  const [startDate, setStartDate] = useState(startOfMonth);
+  const [startDate, setStartDate] = useState(new Date(startOfMonth));
   const [endDate, setEndDate] = useState(new Date());
   const [selectedData, setSelectedData] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -41,7 +41,11 @@ export default function Homepage({ data }) {
       {selectedData && <ExpenseChart data={selectedData} />}
       <button onClick={() => setIsModalOpen(true)}>Add Expense</button>
       {selectedData && <ExpenseHistory data={selectedData} />}
-      <ModalWFooter isModalOpen={isModalOpen} setIsModalOpen={setIsModalOpen} />
+      <ModalWFooter
+        isModalOpen={isModalOpen}
+        setIsModalOpen={setIsModalOpen}
+        data={data}
+      />
     </div>
   );
 }
