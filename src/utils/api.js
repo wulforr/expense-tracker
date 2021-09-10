@@ -10,3 +10,11 @@ export const get = (url) => {
     },
   });
 };
+
+export const post = (url, body) => {
+  return axios.post(`${BASE_URL}/${url}`, body, {
+    headers: {
+      Authorization: "Bearer " + API_KEY,
+    },
+  });
+};

@@ -5,7 +5,7 @@ export const getTime = (inputDate) => {
   return dateFormat(date, "dd, mmm hh:MM TT");
 };
 
-export const getCategory = (data) => {
+export const getCategoryOptions = (data) => {
   const categories = ["Food", "Travel", "Shopping", "Stocks", "Rent"];
   const categoriesInData = data.map((ele) => ele.Category);
   const notFoundCategories = categoriesInData.filter(

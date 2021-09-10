@@ -8,9 +8,11 @@ import {
   Option,
 } from "react-rainbow-components";
 import style from "./style.module.css";
-import { getCategory } from "../../utils/utils";
+import { getCategoryOptions } from "../../utils/utils";
+import { post } from "../../utils/api";
 
 export default function ModalWFooter({ isModalOpen, setIsModalOpen, data }) {
+  const options = getCategoryOptions(data);
   const [amount, setAmount] = useState(0);
   const [description, setDescription] = useState("");
   const [category, setCategory] = useState({
@@ -19,7 +21,6 @@ export default function ModalWFooter({ isModalOpen, setIsModalOpen, data }) {
     label: "Food",
     icon: null,
   });
-  const [options, setOptions] = useState(getCategory(data));
   const [customCategory, setCustomCategory] = useState("");
   const [dateTime, setDateTime] = useState(new Date());
 
@@ -30,6 +31,24 @@ export default function ModalWFooter({ isModalOpen, setIsModalOpen, data }) {
   function handlePicklistChange(value) {
     setCategory(value);
   }
+
+  const handleSave = async () => {
+    const expenseData = {
+      fields: {
+        Amount: Number(amount),
+        Category: category.value === "Custom" ? customCategory : category.value,
+        Date: dateTime,
+        Description: description,
+      },
+      typecast: true,
+    };
+    try {
+      await post("Table%201", expenseData);
+      handleOnClose();
+    } catch (err) {
+      console.error(err);
+    }
+  };
 
   console.log("options", options);
   console.log("category", category);
@@ -49,7 +68,7 @@ export default function ModalWFooter({ isModalOpen, setIsModalOpen, data }) {
               variant="neutral"
               onClick={handleOnClose}
             />
-            <Button label="Save" variant="brand" />
+            <Button label="Save" variant="brand" onClick={handleSave} />
           </div>
         }
       >
