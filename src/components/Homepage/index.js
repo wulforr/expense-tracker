@@ -5,7 +5,7 @@ import ExpenseHistory from "../ExpenseHistory";
 import ModalWFooter from "../Modal";
 import style from "./style.module.css";
 
-export default function Homepage({ data }) {
+export default function Homepage({ data, getData }) {
   const startOfMonth = new Date().setDate(1);
   const [startDate, setStartDate] = useState(new Date(startOfMonth));
   const [endDate, setEndDate] = useState(new Date());
@@ -14,9 +14,9 @@ export default function Homepage({ data }) {
 
   useEffect(() => {
     const filteredData = data.filter(
-      (expense) =>
-        new Date(expense.Date) < endDate && new Date(expense.Date) > startDate
+      (expense) => new Date(expense.Date) >= startDate
     );
+    filteredData.sort((a, b) => new Date(a.Date) - new Date(b.Date));
     setSelectedData(filteredData);
   }, [startDate, endDate, data]);
 
@@ -45,6 +45,7 @@ export default function Homepage({ data }) {
         isModalOpen={isModalOpen}
         setIsModalOpen={setIsModalOpen}
         data={data}
+        getData={getData}
       />
     </div>
   );

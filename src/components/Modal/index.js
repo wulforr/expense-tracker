@@ -11,7 +11,12 @@ import style from "./style.module.css";
 import { getCategoryOptions } from "../../utils/utils";
 import { post } from "../../utils/api";
 
-export default function ModalWFooter({ isModalOpen, setIsModalOpen, data }) {
+export default function ModalWFooter({
+  isModalOpen,
+  setIsModalOpen,
+  data,
+  getData,
+}) {
   const options = getCategoryOptions(data);
   const [amount, setAmount] = useState(0);
   const [description, setDescription] = useState("");
@@ -45,13 +50,11 @@ export default function ModalWFooter({ isModalOpen, setIsModalOpen, data }) {
     try {
       await post("Table%201", expenseData);
       handleOnClose();
+      await getData();
     } catch (err) {
       console.error(err);
     }
   };
-
-  console.log("options", options);
-  console.log("category", category);
 
   return (
     <div className="rainbow-m-bottom_xx-large rainbow-p-bottom_xx-large">

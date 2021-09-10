@@ -9,24 +9,24 @@ function App() {
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
 
-  useEffect(() => {
-    async function getData() {
-      setIsLoading(true);
-      try {
-        const tempData = await get("Table%201");
-        setData(tempData.data.records.map((record) => ({ ...record.fields })));
-        setIsLoading(false);
-      } catch (err) {
-        setIsLoading(false);
-        console.error(err);
-        setError(
-          "There was an error retrieving the data. Please try again!!!!"
-        );
-      }
+  const getData = async () => {
+    try {
+      const tempData = await get("Table%201");
+      setData(tempData.data.records.map((record) => ({ ...record.fields })));
+    } catch (err) {
+      console.error(err);
+      setError("There was an error retrieving the data. Please try again!!!!");
     }
-    getData();
+  };
+
+  useEffect(() => {
+    async function getDataInUseEffect() {
+      setIsLoading(true);
+      await getData();
+      setIsLoading(false);
+    }
+    getDataInUseEffect();
   }, []);
-  console.log("data", data);
 
   if (isLoading) {
     return <Spinner />;
@@ -39,7 +39,7 @@ function App() {
   return (
     <div className="App">
       <header className="App-header">
-        <HomePage data={data} />
+        <HomePage data={data} getData={getData} />
       </header>
     </div>
   );

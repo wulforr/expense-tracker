@@ -13,3 +13,20 @@ export const getCategoryOptions = (data) => {
   );
   return [...categories, ...notFoundCategories];
 };
+
+const totalAmountForCategory = (category, data) => {
+  return data.reduce((acc, curr) => {
+    if (curr.Category === category) return acc + curr.Amount;
+    return acc;
+  }, 0);
+};
+
+export const getPieChartData = (data) => {
+  const categories = data.map((ele) => ele.Category);
+  const uniqueCategories = [...new Set(categories)];
+  const pieChartData = uniqueCategories.map((category) => ({
+    name: category,
+    y: totalAmountForCategory(category, data),
+  }));
+  return pieChartData;
+};

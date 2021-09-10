@@ -2,9 +2,10 @@ import React, { useState } from "react";
 import HighchartsReact from "highcharts-react-official";
 import Highcharts from "highcharts";
 import style from "./style.module.css";
+import { getPieChartData } from "../../utils/utils";
 
 export default function ExpenseChart({ data }) {
-  const mappedData = data.map((ele) => ({ name: ele.Category, y: ele.Amount }));
+  const mappedData = getPieChartData(data);
   const chartOptions = {
     chart: {
       plotBackgroundColor: null,
