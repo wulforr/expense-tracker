@@ -1,0 +1,35 @@
+.lineItem {
+  width: 90%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 0.5rem;
+  position: relative;
+  padding: 0.5rem 2rem;
+}
+
+.lineItemPrice {
+  text-align: center;
+  font-weight: bold;
+}
+
+.actionButtonsMenu {
+  position: absolute;
+  right: 0;
+  top: 0;
+}
+
+.actionButtons {
+  position: absolute;
+  display: flex;
+  background-color: #fafafa;
+  border-radius: 4px;
+  box-shadow: -2px -2px 2px 0px rgba(0, 0, 0, 0.14),
+    2px 2px 2px 0px rgba(0, 0, 0, 0.14);
+}
+
+@media only screen and (min-width: 600px) {
+  .lineItem {
+    width: 52%;
+  }
+}

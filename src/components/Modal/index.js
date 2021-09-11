@@ -9,17 +9,21 @@ import {
 } from "react-rainbow-components";
 import style from "./style.module.css";
 import { getCategoryOptions } from "../../utils/utils";
-import { post } from "../../utils/api";
+import { post, patch } from "../../utils/api";
 
 export default function ModalWFooter({
   isModalOpen,
   setIsModalOpen,
   data,
   getData,
+  selectedExpense,
+  Amount,
 }) {
   const options = getCategoryOptions(data);
-  const [amount, setAmount] = useState(0);
-  const [description, setDescription] = useState("");
+  const [amount, setAmount] = useState(selectedExpense?.Amount ?? 0);
+  const [description, setDescription] = useState(
+    selectedExpense?.Description ?? ""
+  );
   const [category, setCategory] = useState({
     value: "Food",
     name: undefined,
@@ -27,7 +31,7 @@ export default function ModalWFooter({
     icon: null,
   });
   const [customCategory, setCustomCategory] = useState("");
-  const [dateTime, setDateTime] = useState(new Date());
+  const [dateTime, setDateTime] = useState(selectedExpense?.Date ?? new Date());
 
   const handleOnClose = () => {
     setIsModalOpen(false);
@@ -47,15 +51,26 @@ export default function ModalWFooter({
       },
       typecast: true,
     };
-    try {
-      await post("Table%201", expenseData);
-      handleOnClose();
-      await getData();
-    } catch (err) {
-      console.error(err);
+    if (selectedExpense) {
+      try {
+        await patch(`Table%201/${selectedExpense.id}`, expenseData);
+        handleOnClose();
+        await getData();
+      } catch (err) {
+        console.error(err);
+      }
+    } else {
+      try {
+        await post("Table%201", expenseData);
+        handleOnClose();
+        await getData();
+      } catch (err) {
+        console.error(err);
+      }
     }
   };
 
+  console.log(selectedExpense);
   return (
     <div className="rainbow-m-bottom_xx-large rainbow-p-bottom_xx-large">
       <Modal

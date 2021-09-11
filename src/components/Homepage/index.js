@@ -40,7 +40,7 @@ export default function Homepage({ data, getData }) {
       </div>
       {selectedData && <ExpenseChart data={selectedData} />}
       <button onClick={() => setIsModalOpen(true)}>Add Expense</button>
-      {selectedData && <ExpenseHistory data={selectedData} />}
+      {selectedData && <ExpenseHistory data={selectedData} getData={getData} />}
       <ModalWFooter
         isModalOpen={isModalOpen}
         setIsModalOpen={setIsModalOpen}

@@ -1,39 +1,33 @@
-import React from "react";
+import React, { useState } from "react";
 import style from "./style.module.css";
-import { getTime } from "../../utils/utils";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faTrashAlt, faPencilAlt } from "@fortawesome/free-solid-svg-icons";
-import { ButtonIcon } from "react-rainbow-components";
+import ExpenseHistoryLineItem from "../ExpenseHistoryLineItem";
+import Modal from "../Modal";
 
-export default function ExpenseHistory({ data }) {
+export default function ExpenseHistory({ data, getData }) {
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [selectedExpense, setSelectedExpense] = useState(null);
+  const handleEdit = (expense) => {
+    setIsModalOpen(true);
+    setSelectedExpense(expense);
+  };
   return (
     <div className={style.container}>
       {data.map((expense) => (
-        <div className={style.lineItem} key={expense.ID}>
-          <div className={style.lineItemInfo}>
-            <div>{expense.Category}</div>
-            <div>{expense.Description}</div>
-            <div>{getTime(expense.Date)}</div>
-          </div>
-          <div className={style.lineItemRight}>
-            <div className={style.actionButtons}>
-              <ButtonIcon
-                variant="base"
-                size="medium"
-                tooltip="Edit"
-                icon={<FontAwesomeIcon icon={faPencilAlt} />}
-              />
-              <ButtonIcon
-                variant="base"
-                size="medium"
-                tooltip="Delete"
-                icon={<FontAwesomeIcon icon={faTrashAlt} />}
-              />
-            </div>
-            <div className={style.lineItemPrice}>{expense.Amount}</div>
-          </div>
-        </div>
+        <ExpenseHistoryLineItem
+          key={expense.ID}
+          expense={expense}
+          handleEdit={handleEdit}
+        />
       ))}
+      {isModalOpen && (
+        <Modal
+          isModalOpen={isModalOpen}
+          setIsModalOpen={setIsModalOpen}
+          data={data}
+          getData={getData}
+          selectedExpense={selectedExpense}
+        />
+      )}
     </div>
   );
 }

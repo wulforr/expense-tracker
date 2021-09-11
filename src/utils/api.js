@@ -18,3 +18,11 @@ export const post = (url, body) => {
     },
   });
 };
+
+export const patch = (url, body) => {
+  return axios.patch(`${BASE_URL}/${url}`, body, {
+    headers: {
+      Authorization: "Bearer " + API_KEY,
+    },
+  });
+};

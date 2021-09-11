@@ -12,7 +12,12 @@ function App() {
   const getData = async () => {
     try {
       const tempData = await get("Table%201");
-      setData(tempData.data.records.map((record) => ({ ...record.fields })));
+      setData(
+        tempData.data.records.map((record) => ({
+          ...record.fields,
+          id: record.id,
+        }))
+      );
     } catch (err) {
       console.error(err);
       setError("There was an error retrieving the data. Please try again!!!!");
