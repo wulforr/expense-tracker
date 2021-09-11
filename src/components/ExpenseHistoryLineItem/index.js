@@ -9,7 +9,11 @@ import {
 import { ButtonIcon } from "react-rainbow-components";
 import style from "./style.module.css";
 
-export default function ExpenseHistoryLineItem({ expense, handleEdit }) {
+export default function ExpenseHistoryLineItem({
+  expense,
+  handleEdit,
+  handleDelete,
+}) {
   const [isOpen, setIsOpen] = useState(false);
 
   const toggleIsOpen = () => {
@@ -48,6 +52,7 @@ export default function ExpenseHistoryLineItem({ expense, handleEdit }) {
               size="medium"
               tooltip="Delete"
               icon={<FontAwesomeIcon icon={faTrashAlt} />}
+              onClick={() => handleDelete(expense)}
             />
           </div>
         )}

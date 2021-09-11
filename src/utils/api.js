@@ -26,3 +26,11 @@ export const patch = (url, body) => {
     },
   });
 };
+
+export const del = (url) => {
+  return axios.delete(`${BASE_URL}/${url}`, {
+    headers: {
+      Authorization: "Bearer " + API_KEY,
+    },
+  });
+};

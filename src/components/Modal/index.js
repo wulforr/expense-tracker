@@ -70,7 +70,6 @@ export default function ModalWFooter({
     }
   };
 
-  console.log(selectedExpense);
   return (
     <div className="rainbow-m-bottom_xx-large rainbow-p-bottom_xx-large">
       <Modal
