@@ -4,7 +4,11 @@ import ExpenseHistoryLineItem from "../ExpenseHistoryLineItem";
 import Modal from "../Modal";
 import { del } from "../../utils/api";
 
-export default function ExpenseHistory({ data, getData }) {
+export default function ExpenseHistory({ data, getData, category = "all" }) {
+  const filteredData =
+    category === "all"
+      ? data
+      : data.filter((expense) => expense.Category === category);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedExpense, setSelectedExpense] = useState(null);
   const handleEdit = (expense) => {
@@ -22,7 +26,7 @@ export default function ExpenseHistory({ data, getData }) {
   };
   return (
     <div className={style.container}>
-      {data.map((expense) => (
+      {filteredData.map((expense) => (
         <ExpenseHistoryLineItem
           key={expense.ID}
           expense={expense}

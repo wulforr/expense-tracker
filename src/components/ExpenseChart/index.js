@@ -1,11 +1,13 @@
-import React, { useState } from "react";
+import React from "react";
 import HighchartsReact from "highcharts-react-official";
 import Highcharts from "highcharts";
 import style from "./style.module.css";
 import { getPieChartData } from "../../utils/utils";
+import { useHistory } from "react-router-dom";
 
 export default function ExpenseChart({ data }) {
   const mappedData = getPieChartData(data);
+  const history = useHistory();
   const chartOptions = {
     chart: {
       plotBackgroundColor: null,
@@ -29,6 +31,12 @@ export default function ExpenseChart({ data }) {
           enabled: false,
         },
         showInLegend: true,
+        events: {
+          click: function (e) {
+            console.log("e in event", e.point.options.name, e);
+            history.push(`/category/${e.point.options.name}`);
+          },
+        },
       },
     },
     series: [
@@ -39,12 +47,10 @@ export default function ExpenseChart({ data }) {
       },
     ],
   };
-  const [hoverData, setHoverData] = useState(null);
 
   return (
     <div className={style.container}>
       <HighchartsReact highcharts={Highcharts} options={chartOptions} />
-      <h3>Hovering over {hoverData}</h3>
     </div>
   );
 }

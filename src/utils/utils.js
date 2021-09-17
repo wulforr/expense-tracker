@@ -21,6 +21,17 @@ const totalAmountForCategory = (category, data) => {
   }, 0);
 };
 
+const getAmountForDateAndCategory = (date, category, data) => {
+  return data.reduce((acc, curr) => {
+    if (
+      curr.Category === category &&
+      new Date(curr.Date).toLocaleDateString() === date
+    )
+      return acc + curr.Amount;
+    return acc;
+  }, 0);
+};
+
 export const getPieChartData = (data) => {
   const categories = data.map((ele) => ele.Category);
   const uniqueCategories = [...new Set(categories)];
@@ -29,4 +40,13 @@ export const getPieChartData = (data) => {
     y: totalAmountForCategory(category, data),
   }));
   return pieChartData;
+};
+
+export const getLineChartData = (data, category) => {
+  const dates = data.map((ele) => new Date(ele.Date).toLocaleDateString());
+  const uniqueDates = [...new Set(dates)];
+  const lineChartData = uniqueDates.map((date) => [
+    getAmountForDateAndCategory(date, category, data),
+  ]);
+  return { mappedData: lineChartData.reverse(), dates: uniqueDates.reverse() };
 };

@@ -3,6 +3,8 @@ import { get } from "./utils/api";
 import { useEffect, useState } from "react";
 import HomePage from "./components/Homepage";
 import { Spinner } from "react-rainbow-components";
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import CategoryView from "./components/CategoryView";
 
 function App() {
   const [data, setData] = useState(null);
@@ -44,7 +46,16 @@ function App() {
   return (
     <div className="App">
       <header className="App-header">
-        <HomePage data={data} getData={getData} />
+        <Router>
+          <Switch>
+            <Route path="/category/:category">
+              <CategoryView data={data} getData={getData} />
+            </Route>
+            <Route path="/">
+              <HomePage data={data} getData={getData} />
+            </Route>
+          </Switch>
+        </Router>
       </header>
     </div>
   );
