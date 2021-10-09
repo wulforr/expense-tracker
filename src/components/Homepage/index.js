@@ -38,7 +38,7 @@ export default function Homepage({ data, getData }) {
           onChange={(value) => setEndDate(value)}
         />
       </div>
-      {selectedData.length ? (
+      {selectedData?.length ? (
         <ExpenseChart data={selectedData} />
       ) : (
         <div>No Expense in selected time range.</div>
