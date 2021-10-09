@@ -38,7 +38,11 @@ export default function Homepage({ data, getData }) {
           onChange={(value) => setEndDate(value)}
         />
       </div>
-      {selectedData && <ExpenseChart data={selectedData} />}
+      {selectedData.length ? (
+        <ExpenseChart data={selectedData} />
+      ) : (
+        <div>No Expense in selected time range.</div>
+      )}
       <button onClick={() => setIsModalOpen(true)}>Add Expense</button>
       {selectedData && <ExpenseHistory data={selectedData} getData={getData} />}
       <ModalWFooter
