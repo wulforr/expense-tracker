@@ -25,6 +25,7 @@ For live demo check-out [https://expense-tracker-wulforr.vercel.app/](https://ex
 - Users can add their expense.
 - Users can see a pie chart detailing the expenses in various categories.
 - On selecting a particular category expense done in that category on daily basis are shown.
+- User can delete and edit expenses.
 
 ### Technologies used
 
